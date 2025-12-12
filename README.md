@@ -1,8 +1,13 @@
 # NextShort 🚀
 
-![NextShort Icon](icons/icon128.png)
-
+<div align="center">
+    <img src="icons/icon128.png" width="300" height="300">
+    
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support%20my%20work-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/nuhmanpk)
+</div>
+
+    
+
 
 **NextShort** is a Chrome extension that automatically scrolls to the next video on YouTube Shorts and Instagram Reels when the current one ends.
 
@@ -21,12 +26,12 @@ Designed for hands-free viewing, this extension detects the end of a video (by r
 
 1.  Clone this repository:
     ```bash
-    git clone https://github.com/nuhmanpk/ShortScroll.git
+    git clone https://github.com/nuhmanpk/NextShort.git
     ```
 2.  Open Chrome and navigate to `chrome://extensions/`.
 3.  Enable **Developer mode** in the top right corner.
 4.  Click **Load unpacked**.
-5.  Select the `ShortScroll` directory.
+5.  Select the `NextShort` directory.
 
 ## Usage 📖
 
