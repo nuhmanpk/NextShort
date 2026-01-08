@@ -23,10 +23,8 @@ export class BaseScroller {
         this.isRunning = false;
         log('Scroller stopped.');
         if (this.currentVideo) {
-            this.currentVideo.removeEventListener('ended', this.handleEnded.bind(this));
-            // Optionally restore loop attribute if we want to be nice, 
-            // but usually not necessary as user is leaving or stopping.
-            this.currentVideo.loop = true;
+            this.cleanupListeners(this.currentVideo);
+            this.currentVideo = null;
         }
     }
 
@@ -38,6 +36,12 @@ export class BaseScroller {
 
         if (video && video !== this.currentVideo) {
             log('New video detected.', video);
+
+            // Clean up old video listeners
+            if (this.currentVideo) {
+                this.cleanupListeners(this.currentVideo);
+            }
+
             this.attachListeners(video);
             this.currentVideo = video;
         }
@@ -56,9 +60,21 @@ export class BaseScroller {
         // Also set the property just in case
         video.loop = false;
 
-        // Remove previous listeners if any (though we check video !== this.currentVideo)
-        video.removeEventListener('ended', this.handleEnded);
-        video.addEventListener('ended', this.handleEnded.bind(this));
+        // Store bound handler for cleanup
+        this.boundHandleEnded = this.handleEnded.bind(this);
+        video.addEventListener('ended', this.boundHandleEnded);
+    }
+
+    cleanupListeners(video) {
+        if (!video) return;
+
+        // Remove ended listener if it exists
+        if (this.boundHandleEnded) {
+            video.removeEventListener('ended', this.boundHandleEnded);
+        }
+
+        // Restore loop if needed
+        video.loop = true;
     }
 
     handleEnded() {

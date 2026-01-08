@@ -26,7 +26,12 @@ import { log } from '../utils/dom.js';
             scroller = new YoutubeScroller();
         }
     } else if (hostname.includes('instagram.com') && isInstagramEnabled) {
-        if (window.location.pathname.includes('/reels/') || window.location.pathname.startsWith('/reels')) {
+        // Activate on: /reels feed, /explore, /p/ (posts), /reel/ (single reel)
+        const path = window.location.pathname;
+        const isReelsPage = path.includes('/reels/') || path.startsWith('/reels');
+        const isExplorePage = path.includes('/explore') || path.includes('/p/') || (path.includes('/reel/') && !path.startsWith('/reels'));
+
+        if (isReelsPage || isExplorePage) {
             scroller = new InstagramScroller();
         }
     }
