@@ -1,5 +1,14 @@
 import { log } from '../utils/dom.js';
 
+// Listen for messages from popup
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === 'ping') {
+        sendResponse({ status: 'ok' });
+    }
+    return true;
+});
+
+
 export class BaseScroller {
     constructor() {
         this.isRunning = false;
@@ -77,6 +86,43 @@ export class BaseScroller {
         video.loop = true;
     }
 
+    // Helper to increment stats
+    async incrementStats(platform) {
+        try {
+            const result = await chrome.storage.local.get(['stats']);
+            const stats = result.stats || {
+                total: 0,
+                youtube: 0,
+                instagram: 0,
+                lastReset: Date.now()
+            };
+
+            // Check if reset is needed (handled in popup too, but good to have here)
+            const today = new Date().toDateString();
+            const lastReset = new Date(stats.lastReset).toDateString();
+            if (today !== lastReset) {
+                stats.total = 0;
+                stats.youtube = 0;
+                stats.instagram = 0;
+                stats.lastReset = Date.now();
+            }
+
+            // Increment
+            stats.total = (stats.total || 0) + 1;
+            stats[platform] = (stats[platform] || 0) + 1;
+
+            // Save
+            await chrome.storage.local.set({ stats });
+            log(`Stats updated: ${platform} = ${stats[platform]}`);
+
+            // Notify popup if open
+            chrome.runtime.sendMessage({ action: 'videoScrolled', stats }).catch(() => {
+                // Ignore error if popup is closed
+            });
+        } catch (e) {
+            log('Error updating stats:', e);
+        }
+    }
     handleEnded() {
         log('Video ended. Scrolling to next...');
         this.scrollToNext();

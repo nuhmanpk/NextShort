@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "description": "Automatically scrolls to the next YouTube Short or Instagram Reel when the current one finishes.",
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab"
   ],
   "action": {
     "default_popup": "src/popup/popup.html",

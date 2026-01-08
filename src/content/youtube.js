@@ -74,6 +74,7 @@ export class YoutubeScroller extends BaseScroller {
             if (percentage >= 99) {
                 log(`Video reached 99% (${percentage.toFixed(1)}%), scrolling to next...`);
                 this.processedUrls.add(currentUrl);
+                this.incrementStats('youtube');
                 this.scrollToNext();
             }
         }

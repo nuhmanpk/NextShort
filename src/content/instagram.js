@@ -44,6 +44,7 @@ export class InstagramScroller extends BaseScroller {
         // Re-detect page type on each scroll since Instagram is an SPA
         // and user might navigate between explore and reels
         this.detectPageType();
+        this.incrementStats('instagram');
 
         // If we're on explore page or single reel view, click the Next button
         if (this.isExplorePage) {

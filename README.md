@@ -9,16 +9,49 @@
     
 
 
-**NextShort** is a Chrome extension that automatically scrolls to the next video on YouTube Shorts and Instagram Reels when the current one ends.
+**NextShort** is a feature-rich Chrome extension that automatically scrolls to the next video on YouTube Shorts and Instagram Reels when the current one ends.
 
-Designed for hands-free viewing, this extension detects the end of a video (by removing the default loop behavior) and smoothly scrolls to the next item in the feed.
+Designed for hands-free viewing with powerful customization options, real-time statistics, and smart health features that no other auto-scroll extension offers.
 
-## Features ✨
+## ✨ Popup Interface
 
-- **YouTube Shorts Support**: Automatically plays the next short.
-- **Instagram Reels Support**: Automatically plays the next reel.
-- **Toggle Controls**: Enable/Disable globally or per site via a simple popup.
-- **Smart Detection**: Detects navigation between pages (SPA support).
+<div align="center">
+    <img src="assets/popup-preview.png" alt="NextShort Popup Interface" width="380">
+    <p><em>Beautiful, modern interface with live statistics and customization</em></p>
+</div>
+
+## Features 🎯
+
+### 🎬 **Platform Support**
+- **YouTube Shorts**: Automatically scrolls to next short at customizable completion percentage
+- **Instagram Reels**: Smart detection for Reels feed and Explore page
+- **Instagram Explore**: Auto-clicks "Next" button on single reel views
+- **SPA Support**: Seamlessly handles navigation between pages
+
+### 📊 **Statistics Dashboard**
+- **Real-time Video Counter**: Track how many videos you've watched today
+- **Session Timer**: See your current watch session duration
+- **Platform Breakdown**: Separate counters for YouTube and Instagram
+- **Daily Auto-Reset**: Stats refresh automatically at midnight
+
+### ⚙️ **Customization**
+- **Scroll Timing Control**: Set when to scroll (50%-100% of video completion)
+- **Daily Limits**: Set maximum videos per day to prevent endless scrolling
+- **Auto-Pause on Interaction**: Pauses auto-scroll when you engage with content
+- **Per-Platform Toggle**: Enable/disable YouTube and Instagram independently
+
+### 🔍 **Smart Features**
+- **Live Status Detection**: See if extension is active on current page
+- **Script Injection Monitor**: Detects and fixes loading issues
+- **One-Click Reload**: Instantly troubleshoot with reload button
+- **Visual Feedback**: Animated indicators and smooth transitions
+
+### 🎨 **Modern Design**
+- Beautiful glassmorphic interface
+- Auto dark mode support
+- Platform-specific color themes
+- Smooth micro-animations
+- Professional polish
 
 ## Installation 🛠️
 
@@ -35,17 +68,46 @@ Designed for hands-free viewing, this extension detects the end of a video (by r
 
 ## Usage 📖
 
-1.  Open YouTube Shorts or Instagram Reels.
-2.  The extension automatically engages.
-3.  When a video finishes, it will scroll to the next one!
-4.  Click the extension icon in the toolbar to toggle settings.
+1. **Install the extension** (see Installation section above)
+2. **Navigate** to YouTube Shorts or Instagram Reels/Explore
+3. **Watch it work!** Videos will auto-scroll when they finish
+4. **Click the extension icon** to open the popup and:
+   - View your daily statistics and session time
+   - Adjust scroll timing (when to scroll to next video)
+   - Set daily limits to control usage
+   - Enable/disable per platform
+   - Toggle auto-pause on interaction
 
 ## How it Works 🧠
 
-NextShort uses a lightweight content script that observes video elements on the page.
-- It removes the `loop` attribute from the video tag, allowing the `ended` event to fire.
-- It listens for the `ended` event.
-- When fired, it triggers a click on the "Next" button (YouTube) or scrolls the next video into view (Instagram).
+### Core Functionality
+NextShort uses intelligent content scripts that adapt to each platform:
+
+**YouTube Shorts:**
+- Monitors video playback using `timeupdate` events
+- Tracks completion by URL to ensure continuous scrolling
+- Scrolls at customizable percentage (default: 99%)
+- Multiple fallback selectors for reliability
+- Proper cleanup when switching videos
+
+**Instagram Reels & Explore:**
+- Detects page type (Reels feed vs Explore/single view)
+- **Explore mode**: Clicks the "Next" button automatically
+- **Reels mode**: Scrolls next video into viewport
+- Dynamic re-detection for SPA navigation
+- Smart video detection across different layouts
+
+### Statistics & Tracking
+- Tracks videos scrolled per platform using Chrome storage
+- Session timer runs while popup is open
+- Daily reset at midnight
+- All data stored locally (privacy-first)
+
+### Smart Features
+- **Script injection detection**: Popup pings content script to verify it's loaded
+- **Auto-reload**: One-click fix if script fails to inject
+- **Real-time updates**: Stats refresh every 5 seconds in popup
+- **Customizable timing**: Scroll percentage stored in sync storage
 
 ## Contributing 🤝
 

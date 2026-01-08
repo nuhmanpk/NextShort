@@ -4,52 +4,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShortScroll Settings</title>
+  <title>NextShort - Smart Auto Scroll</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
   <div class="container">
+    <!-- Header with Status -->
     <header>
       <div class="logo">
-        <img src="../../icons/icon48.png" alt="ShortScroll Logo">
-        <h1>ShortScroll</h1>
+        <img src="../../icons/icon48.png" alt="NextShort Logo">
+        <h1>NextShort</h1>
       </div>
-      <p>Auto-scroll your Reels & Shorts</p>
+      <div class="status-pill" id="statusPill">
+        <span class="pulse-dot"></span>
+        <span id="statusText">Checking...</span>
+      </div>
     </header>
 
-    <main>
+    <!-- Today's Stats -->
+    <div class="stats-section" id="statsSection">
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <div class="stat-value" id="videoCount">0</div>
+          <div class="stat-label">Videos Today</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-info">
+          <div class="stat-value" id="sessionTime">0m</div>
+          <div class="stat-label">Session Time</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Toggle -->
+    <div class="master-toggle">
+      <div class="toggle-label">
+        <span class="toggle-icon">⚡</span>
+        <span>Auto-Scroll</span>
+      </div>
+      <label class="switch large">
+        <input type="checkbox" id="enabled">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- Platform Cards -->
+    <div class="platforms-section">
+      <h3 class="section-title">Platforms</h3>
+      
+      <!-- YouTube Card -->
+      <div class="platform-card" id="youtubeCard">
+        <div class="platform-header">
+          <div class="platform-info">
+            <div class="platform-icon youtube-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </div>
+            <div class="platform-name">
+              <span class="name">YouTube Shorts</span>
+              <span class="count" id="youtubeCount">0 today</span>
+            </div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="youtube">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Instagram Card -->
+      <div class="platform-card" id="instagramCard">
+        <div class="platform-header">
+          <div class="platform-info">
+            <div class="platform-icon instagram-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </div>
+            <div class="platform-name">
+              <span class="name">Instagram Reels</span>
+              <span class="count" id="instagramCount">0 today</span>
+            </div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="instagram">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Settings -->
+    <div class="advanced-section">
+      <h3 class="section-title">Advanced</h3>
+      
+      <!-- Scroll Timing -->
+      <div class="setting-group">
+        <label class="setting-label">
+          <span>Scroll at</span>
+          <span class="setting-value" id="scrollTimingValue">99%</span>
+        </label>
+        <input type="range" id="scrollTiming" min="50" max="100" value="99" class="slider-input">
+        <div class="slider-labels">
+          <span>50%</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <!-- Daily Limit -->
+      <div class="setting-group">
+        <div class="setting-header">
+          <label class="setting-label">
+            <span>Daily Limit</span>
+            <span class="setting-value" id="dailyLimitValue">Off</span>
+          </label>
+          <label class="switch small">
+            <input type="checkbox" id="dailyLimitEnabled">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <input type="range" id="dailyLimit" min="10" max="200" step="10" value="100" class="slider-input" disabled>
+        <div class="slider-labels">
+          <span>10</span>
+          <span>200 videos</span>
+        </div>
+      </div>
+
+      <!-- Auto Pause on Interaction -->
       <div class="setting-item">
-        <label for="enabled">Enable Extension</label>
-        <label class="switch">
-          <input type="checkbox" id="enabled">
+        <label for="autoPause">Auto-pause on interaction</label>
+        <label class="switch small">
+          <input type="checkbox" id="autoPause">
           <span class="slider round"></span>
         </label>
       </div>
+    </div>
 
-      <div class="divider"></div>
+    <!-- Quick Actions -->
+    <div class="actions-section" id="actionsSection" style="display: none;">
+      <button class="action-btn" id="reloadBtn">
+        <span class="btn-icon">🔄</span>
+        Reload & Inject Script
+      </button>
+    </div>
 
-      <div class="setting-item">
-        <label for="youtube">YouTube Shorts</label>
-        <label class="switch">
-          <input type="checkbox" id="youtube">
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="setting-item">
-        <label for="instagram">Instagram Reels</label>
-        <label class="switch">
-          <input type="checkbox" id="instagram">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </main>
-
+    <!-- Footer -->
     <footer>
-      <a href="https://buymeacoffee.com/nuhmanpk" target="_blank" class="sponsor-link">☕ Buy me a coffee</a>
-      <div class="separator"></div>
-      <a href="https://github.com/nuhmanpk/nextshort" target="_blank">Open Source Project</a>
+      <a href="https://buymeacoffee.com/nuhmanpk" target="_blank" class="sponsor-link">
+        ☕ Buy me a coffee
+      </a>
+      <div class="footer-links">
+        <a href="https://github.com/nuhmanpk/nextshort" target="_blank">GitHub</a>
+        <span class="separator">•</span>
+        <a href="#" id="resetStatsBtn">Reset Stats</a>
+      </div>
     </footer>
   </div>
   <script src="popup.js"></script>
